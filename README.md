@@ -30,7 +30,7 @@ We encourage you to write automated tests.
 
 # Solution
 
-The proposed solution tries to mimic the way ActiveRecord::Validations works.
+The proposed solution tries to mimic the way ActiveRecord::Validations works. This solution was implemented with Ruby 3.
 
 ## Validator class hierarchy
 
