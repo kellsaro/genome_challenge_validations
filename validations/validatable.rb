@@ -6,21 +6,27 @@ require_relative '../validator/digits_min_validator'
 require_relative '../validator/length_in_range_validator'
 require_relative '../validator/uppercase_min_validator'
 
-class Validatable
+module Validatable
   def self.included(klass)
     klass.extend(ClassMethods)
   end
 
   def validate!
-    @errors = []
+    errors ||= []
+    instance_variables.each do |inst_attr|
+      field_sym = inst_attr.to_s.slice(1..).to_sym
 
-    self.class.field_validators[:input].each do |validator|
-      @errors << validator.validate(eval("input"))
+      if self.class.field_validators[field_sym]
+        self.class.field_validators[field_sym]&.each do |validator|
+          errors << validator.validate(eval(field_sym.to_s))
+        end
+      end
     end
 
-    @errors.flatten!.compact!
+    errors ||= []
+    errors.flatten!.compact!
 
-    raise Validations::ValidationException.new(@errors) unless @errors.empty?
+    raise Validations::ValidationException.new(errors) unless errors.empty?
   end
 
   def valid?
@@ -30,7 +36,7 @@ class Validatable
     false
   end
 
-  class << self
+  module ClassMethods
     def field_validators
       @field_validators ||= Hash.new([])
     end

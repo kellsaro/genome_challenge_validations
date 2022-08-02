@@ -1,6 +1,7 @@
 require_relative './validations/validatable'
 
-class GenomeProgram < Validatable
+class GenomeProgram
+  include Validatable
 
   attr_reader :input
 
