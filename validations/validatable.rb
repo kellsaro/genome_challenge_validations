@@ -6,7 +6,7 @@ require_relative '../validator/digits_min_validator'
 require_relative '../validator/length_in_range_validator'
 require_relative '../validator/uppercase_min_validator'
 
-module Validatable
+module Validations::Validatable
   def self.included(klass)
     klass.extend(ClassMethods)
   end
