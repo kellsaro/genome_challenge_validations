@@ -16,10 +16,8 @@ module Validations::Validatable
     instance_variables.each do |inst_attr|
       field_sym = inst_attr.to_s.slice(1..).to_sym
 
-      if self.class.field_validators[field_sym]
-        self.class.field_validators[field_sym]&.each do |validator|
-          errors << validator.validate(eval(field_sym.to_s))
-        end
+      self.class.field_validators[field_sym]&.each do |validator|
+        errors << validator.validate(eval(field_sym.to_s))
       end
     end
 
