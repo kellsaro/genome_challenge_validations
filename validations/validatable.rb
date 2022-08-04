@@ -21,7 +21,6 @@ module Validations::Validatable
       end
     end
 
-    errors ||= []
     errors.flatten!.compact!
 
     raise Validations::ValidationException.new(errors) unless errors.empty?
