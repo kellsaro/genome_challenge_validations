@@ -12,7 +12,7 @@ module Validations::Validatable
   end
 
   def validate!
-    errors ||= []
+    errors = []
     instance_variables.each do |inst_attr|
       field_sym = inst_attr.to_s.slice(1..).to_sym
 
